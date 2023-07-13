@@ -6,7 +6,7 @@ I created a weather dashboard to see the current weather and an expected forecas
 
 ## Usage
 
-When you load up the webpage all that is shown is the header and a search bar (and possible search history if you have used the application before). You then enter any city into the search bar and hit the search button. Then a card of the current weather (including temperature, wind speed, humidity, and an icon of the current weather) is shown along with a 5 day forecast with the predicted weather of the next 5 days. Your search is saved to local storage and displayed under the search bar for an easy way to lookup that city in the future. 
+When you load up the webpage all that is shown is the header and a search bar (and possible search history if you have used the application before). You then enter any city into the search bar and hit the search button. Then a card of the current weather (including date, temperature, wind speed, humidity, and an icon of the current weather) is shown along with a 5 day forecast with the predicted weather of the next 5 days. Your search is saved to local storage and displayed under the search bar for an easy way to lookup that city in the future. 
 
 ## Screenshots
 
