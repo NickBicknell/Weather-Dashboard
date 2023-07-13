@@ -8,14 +8,13 @@ function initForecast() {
     var windEl = $('#wind');
     var humidityEl = $('#humidity');
     var fiveDayEl = $('#five-day-section');
-
     var forecastDateEl = $('.date');
     var forecastTempEl = $('.temperature');
     var forecastWindEl = $('.wind');
     var forecastHumidityEl = $('.humidity');
     var forecastImgEl = $('.weather-img');
     var historyEl = $('#history');
-    var searchHistory = JSON.parse(localStorage.getItem("search")) || [];
+    
 
     var APIKey = "0f8eb1c52701ff5bf5bc1daccc4a58ba";
 
@@ -50,19 +49,40 @@ function initForecast() {
         }).then(function (response) {
             console.log(response);
             fiveDayEl.removeClass("d-none");
-            var forecastCardEl = $('.five-forecast');
-            for (i = 0; i < forecastCardEl.length; i += 8) {
+            var forecastEl = $('#five-forecast');
+            for (i = 0; i < response.list.length; i += 8) {
                 var forecastDate = new Date(response.list[i].dt_txt);
                 var forecastDay = forecastDate.getDate();
                 var forecastMonth = forecastDate.getMonth() + 1;
                 var forecastYear = forecastDate.getFullYear();
+                console.log(forecastDate);
                 forecastDateEl.text(forecastMonth + "/" + forecastDay + "/" + forecastYear);
                 forecastTempEl.text("Temperature: " + response.list[i].main.temp + " °");
                 forecastWindEl.text("Wind: " + response.list[i].wind.speed + " MPH");
                 forecastHumidityEl.text("Humidity: " + response.list[i].main.humidity + " %");
                 var forecastIcon = response.list[i].weather[0].icon;
                 forecastImgEl.attr("src", "https://openweathermap.org/img/wn/" + forecastIcon + ".png");
-            }
+                weatherImgEl.attr("alt", response.list[i].weather[0].description);
+                var forecastColEl = $("<div>").addClass("col-lg-2 m-3");
+                var forecastCardEl = $("<div>").addClass("card bg-info-sublte text-center");
+                var forecastCardBodyEl = $("<div>").addClass("card-body");
+                var cardDateEl = $("<p>").addClass("fw-bold").text(forecastMonth + "/" + forecastDay + "/" + forecastYear);
+                var cardImgEl = $("<img>");
+                cardImgEl.attr("src", "https://openweathermap.org/img/wn/" + forecastIcon + ".png");
+                cardImgEl.attr("alt", response.list[i].weather[0].description);
+                var cardTempEl = $("<p>").text("Temperature: " + response.list[i].main.temp + " °");
+                var cardWindEl = $("<p>").text("Wind: " + response.list[i].wind.speed + " MPH");
+                var cardHumidityEl = $("<p>").text("Humidity: " + response.list[i].main.humidity + " %");
+                forecastCardBodyEl.append(cardDateEl);
+                forecastCardBodyEl.append(cardImgEl);
+                forecastCardBodyEl.append(cardTempEl);
+                forecastCardBodyEl.append(cardWindEl);
+                forecastCardBodyEl.append(cardHumidityEl);
+                forecastCardEl.append(forecastCardBodyEl);
+                forecastColEl.append(forecastCardEl);
+                forecastEl.append(forecastColEl);
+                
+            };
         });
     };
 
@@ -75,18 +95,21 @@ function initForecast() {
         renderHistory();
     });
 
+    var searchHistory = JSON.parse(localStorage.getItem("search")) || [];
+    console.log("search history: ", searchHistory);
     function renderHistory() {
         historyEl.text("");
         for (i = 0; i < searchHistory.length; i++) {
-            var searchItem = $('#document').append("button");
-            searchItem.attr("type", "text");
-            searchItem.attr("readonly", true);
-            searchItem.attr("value", searchHistory[i]);
-            searchItem.attr("class", "form-control")
-            $(searchItem).on("click", function () {
-                getCurrentWeather(searchItem.val());
+            var historyBtn = $("<button>");
+            historyBtn.text(searchHistory[i]);
+            historyBtn.attr("data-location", searchHistory[i]);
+            historyBtn.attr("class", "btn btn-primary my-2 d-block")
+            historyBtn.on("click", function () {
+                getCurrentWeather($(this).data("location"));
+                getForecast($(this).data("location"));
+                console.log($(this).data("location"));
             });
-            historyEl.append(searchItem);
+            $(historyEl).append(historyBtn);
         };
     };
 
