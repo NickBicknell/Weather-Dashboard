@@ -100,7 +100,7 @@ function initForecast() {
             var historyBtn = $("<button>");
             historyBtn.text(searchHistory[i]);
             historyBtn.attr("data-location", searchHistory[i]);
-            historyBtn.attr("class", "btn btn-primary my-2 d-block")
+            historyBtn.attr("class", "btn btn-info my-2 d-block")
             historyBtn.on("click", function () {
                 getCurrentWeather($(this).data("location"));
                 getForecast($(this).data("location"));
