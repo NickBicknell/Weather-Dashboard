@@ -8,12 +8,14 @@
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <title>Weather Dashboard</title>
 </head>
+<!-- Header element -->
 
 <body class="bg-body-secondary">
     <header class="container-fluid text-center bg-dark text-white p-3">
         <h1 class="fs-1 font-monospace">Weather Dashboard</h1>
     </header>
 
+    <!-- current weather element -->
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 col-lg-2 bg-light">
@@ -34,71 +36,18 @@
                         <p class="fs-4" id="humidity">humidity</p>
                     </div>
                 </div>
+                <!-- 5 Day forecast element -->
                 <div class="row d-none" id="five-day-section">
                     <div class="col-12">
                         <h3 class="fs-3 font-monospace fw-bold">5-Day Forecast:</h3>
                     </div>
-                    <div class="row" id="five-forecast">
-                        <!-- <div class="col-lg-2 text-white m-3">
-                            <div class="card bg-info-subtle text-center" style="width: 12rem;">
-                                <div class="card-body">
-                                    <p class="fw-bold date">Date</p>
-                                    <img class="weather-img" alt="">
-                                    <p class="temperature">temp</p>
-                                    <p class="wind">wind</p>
-                                    <p class="humidity">humidity</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 text-white m-3">
-                            <div class="card bg-info-subtle text-center" style="width: 12rem;">
-                                <div class="card-body">
-                                    <p class="fw-bold date">Date</p>
-                                    <img class="weather-img" alt="">
-                                    <p class="temperature">temp</p>
-                                    <p class="wind">wind</p>
-                                    <p class="humidity">humidity</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 text-white m-3">
-                            <div class="card bg-info-subtle text-center" style="width: 12rem;">
-                                <div class="card-body">
-                                    <p class="fw-bold date">Date</p>
-                                    <img class="weather-img" alt="">
-                                    <p class="temperature">temp</p>
-                                    <p class="wind">wind</p>
-                                    <p class="humidity">humidity</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 text-white m-3">
-                            <div class="card bg-info-subtle text-center" style="width: 12rem;">
-                                <div class="card-body">
-                                    <p class="fw-bold date">Date</p>
-                                    <img class="weather-img" alt="">
-                                    <p class="temperature">temp</p>
-                                    <p class="wind">wind</p>
-                                    <p class="humidity">humidity</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 text-white m-3">
-                            <div class="card bg-info-subtle text-center" style="width: 12rem;">
-                                <div class="card-body">
-                                    <p class="fw-bold date">Date</p>
-                                    <img class="weather-img" alt="">
-                                    <p class="temperature">temp</p>
-                                    <p class="wind">wind</p>
-                                    <p class="humidity">humidity</p>
-                                </div> -->
-                            </div>
-                        </div>
-                    </div>
+                    <!-- 5 day forecast cards (generated through js) -->
+                    <div class="row" id="five-forecast"></div>
                 </div>
             </div>
         </div>
     </div>
+
 
 
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"

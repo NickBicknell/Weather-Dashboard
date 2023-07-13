@@ -1,4 +1,6 @@
+// load forecasts onto page function
 function initForecast() {
+    // jquery element id selectors
     var cityEl = $('#city-search');
     var searchBtnEl = $('#search-btn');
     var currentWeatherEl = $('#current-weather');
@@ -8,16 +10,12 @@ function initForecast() {
     var windEl = $('#wind');
     var humidityEl = $('#humidity');
     var fiveDayEl = $('#five-day-section');
-    var forecastDateEl = $('.date');
-    var forecastTempEl = $('.temperature');
-    var forecastWindEl = $('.wind');
-    var forecastHumidityEl = $('.humidity');
-    var forecastImgEl = $('.weather-img');
     var historyEl = $('#history');
-    
-
+    var forecastEl = $('#five-forecast');
+    // api key for weather api
     var APIKey = "0f8eb1c52701ff5bf5bc1daccc4a58ba";
-
+    
+    // function to get current weather based on city name input
     function getCurrentWeather(cityName) {
         var requestURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey + "&units=imperial";
         $.ajax({
@@ -41,7 +39,10 @@ function initForecast() {
         });
 
     };
+
+    // function to get 5 day forecast 
     function getForecast(cityName) {
+        forecastEl.html("");
         var requestURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + APIKey + "&units=imperial";
         $.ajax({
             url: requestURL,
@@ -49,22 +50,15 @@ function initForecast() {
         }).then(function (response) {
             console.log(response);
             fiveDayEl.removeClass("d-none");
-            var forecastEl = $('#five-forecast');
             for (i = 0; i < response.list.length; i += 8) {
                 var forecastDate = new Date(response.list[i].dt_txt);
                 var forecastDay = forecastDate.getDate();
                 var forecastMonth = forecastDate.getMonth() + 1;
                 var forecastYear = forecastDate.getFullYear();
                 console.log(forecastDate);
-                forecastDateEl.text(forecastMonth + "/" + forecastDay + "/" + forecastYear);
-                forecastTempEl.text("Temperature: " + response.list[i].main.temp + " °");
-                forecastWindEl.text("Wind: " + response.list[i].wind.speed + " MPH");
-                forecastHumidityEl.text("Humidity: " + response.list[i].main.humidity + " %");
                 var forecastIcon = response.list[i].weather[0].icon;
-                forecastImgEl.attr("src", "https://openweathermap.org/img/wn/" + forecastIcon + ".png");
-                weatherImgEl.attr("alt", response.list[i].weather[0].description);
-                var forecastColEl = $("<div>").addClass("col-lg-2 m-3");
-                var forecastCardEl = $("<div>").addClass("card bg-info-sublte text-center");
+                var forecastColumnEl = $("<div>").addClass("col-lg-2 m-3");
+                var forecastCardEl = $("<div>").addClass("card bg-info-subtle text-center");
                 var forecastCardBodyEl = $("<div>").addClass("card-body");
                 var cardDateEl = $("<p>").addClass("fw-bold").text(forecastMonth + "/" + forecastDay + "/" + forecastYear);
                 var cardImgEl = $("<img>");
@@ -79,24 +73,27 @@ function initForecast() {
                 forecastCardBodyEl.append(cardWindEl);
                 forecastCardBodyEl.append(cardHumidityEl);
                 forecastCardEl.append(forecastCardBodyEl);
-                forecastColEl.append(forecastCardEl);
-                forecastEl.append(forecastColEl);
-                
+                forecastColumnEl.append(forecastCardEl);
+                forecastEl.append(forecastColumnEl);
             };
         });
     };
 
+    // search button on click event function loading the weather and forecast 
     $(searchBtnEl).on("click", function () {
         var cityName = cityEl.val();
         getCurrentWeather(cityName);
         getForecast(cityName);
-        searchHistory.push(cityName)
+        searchHistory.push(cityName);
         localStorage.setItem("search", JSON.stringify(searchHistory));
         renderHistory();
     });
 
+    // search history/local storage variable
     var searchHistory = JSON.parse(localStorage.getItem("search")) || [];
     console.log("search history: ", searchHistory);
+
+    // local storage/search history function
     function renderHistory() {
         historyEl.text("");
         for (i = 0; i < searchHistory.length; i++) {
@@ -114,8 +111,6 @@ function initForecast() {
     };
 
     renderHistory();
-
-
 };
 
 initForecast();
