@@ -50,7 +50,7 @@ function initForecast() {
         }).then(function (response) {
             console.log(response);
             fiveDayEl.removeClass("d-none");
-            for (i = 0; i < response.list.length; i += 8) {
+            for (i = 6; i < response.list.length; i += 8) {
                 var forecastDate = new Date(response.list[i].dt_txt);
                 var forecastDay = forecastDate.getDate();
                 var forecastMonth = forecastDate.getMonth() + 1;
